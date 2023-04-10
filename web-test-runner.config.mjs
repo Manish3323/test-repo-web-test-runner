@@ -1,4 +1,5 @@
 // import { playwrightLauncher } from '@web/test-runner-playwright';
+import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 const filteredLogs = ['Running in dev mode', 'lit-html is in dev mode'];
 
@@ -10,6 +11,9 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   nodeResolve: {
     exportConditions: ['browser', 'development'],
   },
+  plugins: [
+    esbuildPlugin({ts: true, target: 'auto', tsconfig: './tsconfig.json'})
+  ],
   /** Filter out lit dev mode logs */
   filterBrowserLogs(log) {
     for (const arg of log.args) {
